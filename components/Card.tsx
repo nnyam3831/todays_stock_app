@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 import * as WebBrowser from "expo-web-browser";
+import { useNavigation } from "@react-navigation/native";
+import { AsyncStorage } from "react-native";
 
 const Container = styled.View`
   margin-top: 20px;
@@ -59,10 +61,17 @@ interface Props {
 }
 const Card: React.FC<Props> = ({ percent, price, link, title }) => {
   const up = percent[0];
+  const navigation = useNavigation();
+
   const goToLink = async () => {
     if (!link) return;
     const url = "https://finance.naver.com" + link;
     await WebBrowser.openBrowserAsync(url);
+  };
+  const goToNews = () => {
+    navigation.navigate("News", {
+      title,
+    });
   };
   return (
     <Container>
@@ -80,7 +89,7 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
           <Text>자세히</Text>
         </Touchable>
 
-        <Touchable>
+        <Touchable onPress={goToNews}>
           <Text>관련기사</Text>
         </Touchable>
       </Right>

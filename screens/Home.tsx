@@ -63,7 +63,7 @@ const Home = () => {
           <ActivityIndicator size="large" />
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView>
           <Body>
             {riseData?.map((rise) => (
               <Card key={rise.title} {...rise} />

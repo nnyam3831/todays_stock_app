@@ -25,7 +25,13 @@ interface Props {
 }
 const RefreshBtn: React.FC<Props> = ({ onPress }) => {
   return (
-    <Touchable onPress={onPress} activeOpacity={0.6}>
+    <Touchable
+      onPress={onPress}
+      activeOpacity={0.6}
+      onLongPress={() => {
+        console.log("롱롱ㅋ");
+      }}
+    >
       <Ionicons
         name={Platform.OS === "ios" ? "ios-refresh" : "md-refresh"}
         size={28}
