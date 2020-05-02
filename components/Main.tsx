@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { getGoldenCross } from "../redux/stockSlice";
@@ -18,10 +18,14 @@ const Main = () => {
   useEffect(() => {
     test();
   }, []);
+  let id = 0;
+  const onClick = () => {
+    console.log("뿅뿅");
+  };
   return (
     <ScrollView>
-      {goldenCross?.map((gc: any) => (
-        <Text>{gc.title}</Text>
+      {goldenCross?.map((gc) => (
+        <Text key={++id}>{gc.title}</Text>
       ))}
     </ScrollView>
   );

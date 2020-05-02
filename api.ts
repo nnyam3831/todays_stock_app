@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const callApi = async (path: string) => {
-  const baseUrl = "http://172.30.1.34:5000";
+  const baseUrl = "http://172.30.1.9:5000";
   const fullUrl = `${baseUrl}${path}`;
   return axios["get"](fullUrl);
 };

@@ -1,17 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { Text, Image } from "react-native";
 import Axios from "axios";
 import api from "./api";
 import Main from "./components/Main";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./redux/store";
-import { getGoldenCross } from "./redux/stockSlice";
-export default function App() {
-  const [list, setList] = useState(null);
+import { getGoldenCross, getRise, getSearch, getKOS } from "./redux/stockSlice";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
+import { AppLoading } from "expo";
+import Navigator from "./navigation/NavController";
 
-  return (
+const cacheImages = (images) =>
+  images.map((image) => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+
+const cacheFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
+
+export default function App() {
+  const [isReady, setIsReady] = useState(false);
+  const handleFinish = () => setIsReady(true);
+  const loadAssets = async () => {
+    try {
+      const images = [require("./assets/icon.png"), require("./assets/splash.png")];
+      const fonts = [Ionicons.font];
+      const imagePromises = cacheImages(images);
+      const fontPromises = cacheFonts(fonts);
+    } catch (e) {
+      console.error();
+    } finally {
+      setIsReady(true);
+    }
+  };
+
+  useEffect(() => {
+    loadAssets();
+  }, []);
+  return isReady ? (
     <Provider store={store}>
-      <Main />
+      <Navigator />
     </Provider>
+  ) : (
+    <AppLoading onError={console.error} onFinish={handleFinish} />
   );
 }
