@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Home";
-import SearchList from "../screens/SearchList";
 import Golden from "../screens/Golden";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CheckList from "../screens/CheckList";
+import Drawer from "./Drawer";
 
 const TabsNavigator = createBottomTabNavigator();
 
@@ -15,10 +15,8 @@ const Tabs = ({ navigation, route }) => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           let iconName = Platform.OS === "ios" ? "ios-" : "md-";
-          if (route.name === "Home") {
+          if (route.name === "Drawer") {
             iconName += "home";
-          } else if (route.name === "SearchList") {
-            iconName += "list";
           } else if (route.name === "Golden") {
             iconName += "shuffle";
           } else if (route.name === "CheckList") {
@@ -32,8 +30,7 @@ const Tabs = ({ navigation, route }) => {
         style: { backgroundColor: "black" },
       }}
     >
-      <TabsNavigator.Screen name="Home" component={Home} />
-      <TabsNavigator.Screen name="SearchList" component={SearchList} />
+      <TabsNavigator.Screen name="Drawer" component={Drawer} />
       <TabsNavigator.Screen name="Golden" component={Golden} />
       <TabsNavigator.Screen name="CheckList" component={CheckList} />
     </TabsNavigator.Navigator>

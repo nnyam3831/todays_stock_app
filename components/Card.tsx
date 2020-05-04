@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation } from "@react-navigation/native";
 import { AsyncStorage } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { register } from "../utils";
 
 const Container = styled.View`
   margin-top: 20px;
@@ -68,11 +71,7 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
     const url = "https://finance.naver.com" + link;
     await WebBrowser.openBrowserAsync(url);
   };
-  const goToNews = () => {
-    navigation.navigate("News", {
-      title,
-    });
-  };
+
   return (
     <Container>
       <Left>
@@ -85,12 +84,20 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
         </InfoContainer>
       </Left>
       <Right>
-        <Touchable onPress={goToLink}>
+        <Touchable
+          onPress={() => {
+            goToLink;
+          }}
+        >
           <Text>자세히</Text>
         </Touchable>
 
-        <Touchable onPress={goToNews}>
-          <Text>관련기사</Text>
+        <Touchable
+          onPress={() => {
+            register(title, link);
+          }}
+        >
+          <Text>즐겨찾기</Text>
         </Touchable>
       </Right>
     </Container>

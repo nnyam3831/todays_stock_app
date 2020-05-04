@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { ScrollView } from "react-native";
 import Card from "../components/Card";
+import GoldenList from "../components/GoldenList";
 
 const Container = styled.View`
   flex: 1;
@@ -34,18 +35,14 @@ const Body = styled.View`
 `;
 const Golden = () => {
   const goldenData = useSelector((state: RootState) => state.stockReducer.goldenCross);
-
+  console.log(goldenData.length);
   return (
     <Container>
       <Header>
         <Text>Golden Cross</Text>
       </Header>
       <ScrollView>
-        <Body>
-          {goldenData?.map((data) => (
-            <Card key={data.link} {...data} />
-          ))}
-        </Body>
+        <GoldenList goldenData={goldenData.slice(0, 20)} />
       </ScrollView>
     </Container>
   );
