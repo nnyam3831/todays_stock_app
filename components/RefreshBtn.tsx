@@ -22,10 +22,12 @@ const Text = styled.Text`
 
 interface Props {
   onPress?: () => any;
+  className?: string;
 }
-const RefreshBtn: React.FC<Props> = ({ onPress }) => {
+const RefreshBtn: React.FC<Props> = ({ onPress, className }) => {
   return (
     <Touchable
+      className={className}
       onPress={onPress}
       activeOpacity={0.6}
       onLongPress={() => {

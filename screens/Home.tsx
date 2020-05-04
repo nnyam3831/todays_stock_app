@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, ScrollView, ActivityIndicator, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  View,
+  TouchableOpacity,
+  AsyncStorage,
+} from "react-native";
 import styled from "styled-components/native";
 import Title from "../components/Title";
 import Card from "../components/Card";
@@ -51,7 +58,6 @@ const Home = () => {
   useEffect(() => {
     getStockInfo();
   }, []);
-
   return loading ? (
     <Container>
       <Header>

@@ -11,14 +11,18 @@ export const register = async (title, link): Promise<boolean> => {
         console.log("이미 등록한 종목입니다.");
         return false;
       }
-      const newStock = { title: title, link: link };
+      const today = new Date();
+      const date = `${today.getFullYear()}년 ${today.getMonth()}월 ${today.getDate()}일`;
+      const newStock = { title: title, link: link, date: date, content: "" };
       data = [...data, newStock];
-      console.log(data);
+
       await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
       return true;
     } else {
       // 초기
-      const newStock = { title: title, link: link };
+      const today = new Date();
+      const date = `${today.getFullYear()}년 ${today.getMonth()}월 ${today.getDate()}일`;
+      const newStock = { title: title, link: link, date: date, content: "" };
       const data = [newStock];
       await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
       console.log("됨?");
@@ -29,4 +33,10 @@ export const register = async (title, link): Promise<boolean> => {
     console.log(e);
     return false;
   }
+};
+
+export const getCheckList = async (): Promise<any> => {
+  const checkList = await AsyncStorage.getItem("CHECKLIST");
+  if (!checkList) return;
+  return JSON.parse(checkList);
 };
