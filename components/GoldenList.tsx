@@ -8,7 +8,6 @@ const Body = styled.View`
   padding-bottom: 30px;
 `;
 const GoldenList = ({ goldenData }) => {
-  console.log(goldenData.length);
   return (
     <Body>
       {goldenData?.map((data) => (

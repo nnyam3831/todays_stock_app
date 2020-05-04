@@ -23,8 +23,6 @@ const Title = styled.Text`
   font-size: 20px;
 `;
 const SideContent = () => {
-  console.log("hola");
-
   return (
     <Container>
       <Header>

@@ -30,7 +30,7 @@ interface Props {
 const Title: React.FC<Props> = ({ percent, price, title }) => {
   let per = "loading";
   per = percent?.split(" ")[1];
-  per = per.substr(0, per.length - 2);
+  per = per?.substr(0, per.length - 2);
   let up;
   if (per) {
     up = per[0];

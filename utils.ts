@@ -1,19 +1,32 @@
 import { AsyncStorage } from "react-native";
 
-export const register = async (title, link) => {
+export const register = async (title, link): Promise<boolean> => {
   try {
     const checkList = await AsyncStorage.getItem("CHECKLIST");
-    let data = checkList ? JSON.parse(checkList) : undefined;
-    console.log("앙");
-    const isExist = data ? data.find((stock) => stock.title === title) : false;
-    console.log(data);
-    if (isExist) throw Error();
-    const newStock = { title: title, link: link };
-    data = [...data, newStock];
-    console.log("저장 성공 ㅋ");
-    return AsyncStorage.setItem("CHECKLIST", data);
+    if (checkList) {
+      let data = JSON.parse(checkList);
+      console.log("check");
+      const isExist = data.find((stock) => stock.title === title);
+      if (isExist) {
+        console.log("이미 등록한 종목입니다.");
+        return false;
+      }
+      const newStock = { title: title, link: link };
+      data = [...data, newStock];
+      console.log(data);
+      await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
+      return true;
+    } else {
+      // 초기
+      const newStock = { title: title, link: link };
+      const data = [newStock];
+      await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
+      console.log("됨?");
+      return true;
+    }
   } catch (e) {
     console.log("error");
     console.log(e);
+    return false;
   }
 };

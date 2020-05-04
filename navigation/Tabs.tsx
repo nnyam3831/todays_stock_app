@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CheckList from "../screens/CheckList";
 import Drawer from "./Drawer";
+import Temp from "../screens/Temp";
 
 const TabsNavigator = createBottomTabNavigator();
 
@@ -21,6 +22,8 @@ const Tabs = ({ navigation, route }) => {
             iconName += "shuffle";
           } else if (route.name === "CheckList") {
             iconName += "checkbox";
+          } else if (route.name === "Temp") {
+            iconName += "plane";
           }
           return <Ionicons name={iconName} color={focused ? "white" : "grey"} size={26} />;
         },
@@ -33,6 +36,7 @@ const Tabs = ({ navigation, route }) => {
       <TabsNavigator.Screen name="Drawer" component={Drawer} />
       <TabsNavigator.Screen name="Golden" component={Golden} />
       <TabsNavigator.Screen name="CheckList" component={CheckList} />
+      <TabsNavigator.Screen name="Temp" component={Temp} />
     </TabsNavigator.Navigator>
   );
 };

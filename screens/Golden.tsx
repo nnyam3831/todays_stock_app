@@ -35,7 +35,7 @@ const Body = styled.View`
 `;
 const Golden = () => {
   const goldenData = useSelector((state: RootState) => state.stockReducer.goldenCross);
-  console.log(goldenData.length);
+
   return (
     <Container>
       <Header>
