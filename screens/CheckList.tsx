@@ -3,10 +3,6 @@ import styled from "styled-components/native";
 import Grid from "../components/Grid";
 import GridLayOut from "react-native-grid-component";
 import { getCheckList } from "../utils";
-import { AsyncStorage, Platform } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-import RefreshBtn from "../components/RefreshBtn";
 
 const Container = styled.View`
   flex: 1;
@@ -49,30 +45,31 @@ const Text = styled.Text`
   font-weight: bold;
   font-size: 20px;
 `;
-const RfBtn = styled(RefreshBtn)``;
-const renderItem = (list) => {
-  if (!list) return list;
-  return <Grid key={list.link} {...list} />;
-};
 const CheckList = ({ navigation }) => {
+  const something = navigation.addListener("focus", (e) => {
+    getAsync();
+  });
   const [list, setList] = useState([]);
   const getAsync = async () => {
     const data = await getCheckList();
     setList(data);
   };
+  const renderItem = (list) => {
+    if (!list) return list;
+    return <Grid key={list.link} {...list} refresh={getAsync} />;
+  };
 
   useEffect(() => {
     return () => getAsync();
   }, []);
-  console.log("ㅠ");
   return (
     <Container>
       <Header>
         <Text>Check List</Text>
-        <RfBtn onPress={() => getAsync()} />
       </Header>
       <Body>
         <GridLayOut
+          extradata={getAsync}
           showsVerticalScrollIndicator={false}
           style={{ flex: 1, display: "flex", align: "center" }}
           renderItem={renderItem}

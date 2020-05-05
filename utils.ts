@@ -1,11 +1,10 @@
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, AppState } from "react-native";
 
 export const register = async (title, link): Promise<boolean> => {
   try {
     const checkList = await AsyncStorage.getItem("CHECKLIST");
     if (checkList) {
       let data = JSON.parse(checkList);
-      console.log("check");
       const isExist = data.find((stock) => stock.title === title);
       if (isExist) {
         console.log("이미 등록한 종목입니다.");
@@ -25,7 +24,6 @@ export const register = async (title, link): Promise<boolean> => {
       const newStock = { title: title, link: link, date: date, content: "" };
       const data = [newStock];
       await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
-      console.log("됨?");
       return true;
     }
   } catch (e) {
@@ -39,4 +37,19 @@ export const getCheckList = async (): Promise<any> => {
   const checkList = await AsyncStorage.getItem("CHECKLIST");
   if (!checkList) return;
   return JSON.parse(checkList);
+};
+
+export const removeCheckList = async (title: string) => {
+  try {
+    const checkList = await AsyncStorage.getItem("CHECKLIST");
+    let list = JSON.parse(checkList);
+    list = list.filter((stock) => stock.title !== title);
+    await AsyncStorage.setItem("CHECKLIST", JSON.stringify(list));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const randomKey = (): string => {
+  return (Math.random() * 10000000).toString();
 };

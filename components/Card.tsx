@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import * as WebBrowser from "expo-web-browser";
 import { useNavigation } from "@react-navigation/native";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { register } from "../utils";
@@ -65,13 +65,30 @@ interface Props {
 const Card: React.FC<Props> = ({ percent, price, link, title }) => {
   const up = percent[0];
   const navigation = useNavigation();
-
   const goToLink = async () => {
     if (!link) return;
     const url = "https://finance.naver.com" + link;
     await WebBrowser.openBrowserAsync(url);
   };
-
+  const registerCheckList = (title: string, link: string) => {
+    Alert.alert("등록하시겠습니까?", "", [
+      {
+        text: "OK",
+        onPress: async () => {
+          const reg = await register(title, link);
+          if (reg) {
+            Alert.alert("등록되었습니다");
+          } else {
+            Alert.alert("이미 등록된 아이템입니다.");
+          }
+        },
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
+  };
   return (
     <Container>
       <Left>
@@ -86,7 +103,7 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
       <Right>
         <Touchable
           onPress={() => {
-            goToLink;
+            goToLink();
           }}
         >
           <Text>자세히</Text>
@@ -94,7 +111,7 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
 
         <Touchable
           onPress={() => {
-            register(title, link);
+            registerCheckList(title, link);
           }}
         >
           <Text>즐겨찾기</Text>
