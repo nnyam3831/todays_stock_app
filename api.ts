@@ -1,5 +1,5 @@
 import axios from "axios";
-import Env from "./enviornment";
+import Env from "./environment";
 
 const callApi = async (path: string) => {
   const baseUrl = Env().apiURL;
