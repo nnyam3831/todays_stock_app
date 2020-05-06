@@ -1,7 +1,8 @@
 import axios from "axios";
+import Env from "./enviornment";
 
 const callApi = async (path: string) => {
-  const baseUrl = "http://192.168.219.135:5000";
+  const baseUrl = Env().apiURL;
   const fullUrl = `${baseUrl}${path}`;
   return axios["get"](fullUrl);
 };
