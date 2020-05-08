@@ -65,7 +65,6 @@ const Golden = () => {
     setData(goldenData.slice(0, 20));
   }, []);
 
-  console.log(loading, page);
   return (
     <Container>
       <Header>

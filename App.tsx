@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text, Image } from "react-native";
+import { Text, Image, View } from "react-native";
 import Axios from "axios";
 import api from "./api";
-import Main from "./components/Main";
 import { Provider, useDispatch } from "react-redux";
 import store from "./redux/store";
 import { getGoldenCross, getRise, getSearch, getKOS } from "./redux/stockSlice";
@@ -25,7 +24,8 @@ const cacheFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
-  const handleFinish = () => setIsReady(true);
+  const [isSplashReady, setIsSplashReady] = useState(false);
+  const handleFinish = () => setIsSplashReady(true);
   const loadAssets = async () => {
     try {
       const images = [require("./assets/icon.png"), require("./assets/splash.png")];
@@ -42,11 +42,18 @@ export default function App() {
   useEffect(() => {
     loadAssets();
   }, []);
-  return isReady ? (
+  if (!isSplashReady)
+    return <AppLoading onError={console.error} startAsync={loadAssets} onFinish={handleFinish} />;
+  if (!isReady)
+    return (
+      <View style={{ flex: 1 }}>
+        <Image source={require("./assets/splash.png")} />
+      </View>
+    );
+
+  return (
     <Provider store={store}>
       <Navigator />
     </Provider>
-  ) : (
-    <AppLoading onError={console.error} onFinish={handleFinish} />
   );
 }

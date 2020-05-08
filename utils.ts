@@ -35,6 +35,7 @@ export const register = async (title, link): Promise<boolean> => {
 
 export const getCheckList = async (): Promise<any> => {
   const checkList = await AsyncStorage.getItem("CHECKLIST");
+
   if (!checkList) return;
   return JSON.parse(checkList);
 };

@@ -4,6 +4,7 @@ import Env from "./environment";
 const callApi = async (path: string) => {
   const baseUrl = Env().apiURL;
   const fullUrl = `${baseUrl}${path}`;
+
   return axios["get"](fullUrl);
 };
 

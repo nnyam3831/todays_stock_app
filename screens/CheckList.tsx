@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import Grid from "../components/Grid";
 import GridLayOut from "react-native-grid-component";
-import { getCheckList } from "../utils";
+import { getCheckList, randomKey } from "../utils";
+import Axios from "axios";
+import { AsyncStorage } from "react-native";
 
 const Container = styled.View`
   flex: 1;
@@ -49,9 +51,11 @@ const CheckList = ({ navigation }) => {
   const something = navigation.addListener("focus", (e) => {
     getAsync();
   });
+
   const [list, setList] = useState([]);
   const getAsync = async () => {
     const data = await getCheckList();
+
     setList(data);
   };
   const renderItem = (list) => {
@@ -73,8 +77,9 @@ const CheckList = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           style={{ flex: 1, display: "flex", align: "center" }}
           renderItem={renderItem}
-          data={list ? list : "no data"}
+          data={list ? list : []}
           numColumns={2}
+          keyExtractor={(item, index) => item.link + randomKey()}
         />
       </Body>
     </Container>
