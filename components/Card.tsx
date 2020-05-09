@@ -70,16 +70,17 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
     const url = "https://finance.naver.com" + link;
     await WebBrowser.openBrowserAsync(url);
   };
-  const registerCheckList = (title: string, link: string) => {
+
+  const registerCheckList = () => {
     Alert.alert("등록하시겠습니까?", "", [
       {
         text: "OK",
         onPress: async () => {
           const reg = await register(title, link);
           if (reg) {
-            Alert.alert("등록되었습니다");
+            return Alert.alert("등록되었습니다", "");
           } else {
-            Alert.alert("이미 등록된 아이템입니다.");
+            return Alert.alert("이미 등록된 아이템입니다", "");
           }
         },
       },
@@ -109,11 +110,7 @@ const Card: React.FC<Props> = ({ percent, price, link, title }) => {
           <Text>자세히</Text>
         </Touchable>
 
-        <Touchable
-          onPress={() => {
-            registerCheckList(title, link);
-          }}
-        >
+        <Touchable onPress={() => registerCheckList()}>
           <Text>즐겨찾기</Text>
         </Touchable>
       </Right>
