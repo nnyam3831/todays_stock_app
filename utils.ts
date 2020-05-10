@@ -11,7 +11,7 @@ export const register = async (title, link): Promise<boolean> => {
         return false;
       }
       const today = new Date();
-      const date = `${today.getFullYear()}년 ${today.getMonth()}월 ${today.getDate()}일`;
+      const date = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
       const newStock = { title: title, link: link, date: date, content: "" };
       data = [...data, newStock];
 
@@ -20,7 +20,9 @@ export const register = async (title, link): Promise<boolean> => {
     } else {
       // 초기
       const today = new Date();
-      const date = `${today.getFullYear()}년 ${today.getMonth()}월 ${today.getDate()}일`;
+      console.log(today);
+      const date = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+      console.log(date);
       const newStock = { title: title, link: link, date: date, content: "" };
       const data = [newStock];
       await AsyncStorage.setItem("CHECKLIST", JSON.stringify(data));
